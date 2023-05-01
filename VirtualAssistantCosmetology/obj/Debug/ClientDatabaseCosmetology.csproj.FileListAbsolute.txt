@@ -1,0 +1,14 @@
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\bin\Debug\ClientDatabaseCosmetology.exe.config
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\bin\Debug\ClientDatabaseCosmetology.exe
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\bin\Debug\ClientDatabaseCosmetology.pdb
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.csproj.AssemblyReference.cache
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.csproj.SuggestedBindingRedirects.cache
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.MainForm.resources
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.Properties.Resources.resources
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.csproj.GenerateResource.cache
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.csproj.CoreCompileInputs.cache
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.exe
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.pdb
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.NewEntryForm.resources
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.NewClientForm.resources
+C:\Users\lucky\source\repos\ClientDatabaseCosmetology\ClientDatabaseCosmetology\obj\Debug\ClientDatabaseCosmetology.PictureView.resources
