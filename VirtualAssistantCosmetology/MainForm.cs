@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace ClientDatabaseCosmetology
+namespace VirtualAssistantCosmetology
 {
     public partial class MainForm : Form
     {
-        static List<string[]> entry_db = new List<string[]>();
+        public static List<string[]> entry_db = new List<string[]>();
         public static List<string[]> client_db = new List<string[]>();
         public static List<string[]> picture_db = new List<string[]>();
+        public static List<string[]> procedures_db = new List<string[]>();
+        public static List<string[]> preparats_db = new List<string[]>();
 
         public static string drive_letter = Directory.Exists(@"D:\") ? @"D:\" : @"C:\";
         public static string home_path = drive_letter + @"CosmetologyDB\";
@@ -26,6 +28,8 @@ namespace ClientDatabaseCosmetology
         public static string entry_db_path = databases_path + @"entries.db";
         public static string clients_db_path = databases_path + @"clients.db";
         public static string pictures_db_path = databases_path + @"pictures.db";
+        public static string procedures_db_path = databases_path + @"procedures.db";
+        public static string preparats_db_path = databases_path + @"preparats.db";
 
         int max_entries_per_page = 11;
         int active_page = 0;
@@ -33,8 +37,14 @@ namespace ClientDatabaseCosmetology
         int search_res = 0;
 
         bool filteres = false;
+
+        static MainForm this_;
+
+
+        
         public MainForm()
         {
+            this_ = this;
             InitializeComponent();
             ReadLocalDatabases();
             up_btn.Enabled = false;
@@ -48,12 +58,12 @@ namespace ClientDatabaseCosmetology
 
 
 
-        public static void AddEntry(int client_id, string date, string ProcType, string Recomm, string photopath)
+        public static void AddEntry(int client_id, string date, string ProcType, string Recomm, string photopath, string[] pictures)
         {
             string name = client_db[client_id][0];
             string desc = client_db[client_id][1];
             
-            picture_db.Insert(0, new string[] {photopath});
+            picture_db.Insert(0, pictures);
             entry_db.Insert(0, new string[] {name, desc, date, ProcType, Recomm, photopath });
             WriteLocalDatabases();
         }
@@ -62,18 +72,46 @@ namespace ClientDatabaseCosmetology
             client_db.Add(new string[] { name, desc });
             WriteLocalDatabases();
         }
-        public static int GetClientIndex(string name)
+        public static int GetClientIndex(string name, int i)
         {
             int ind = 0;
+            List<int> indexes = new List<int>();
             foreach (string[] client in client_db)
             {
+                //Console.WriteLine(CompareStrings(client[0], name)+" " + client[0] + " " + name);
                 if (CompareStrings(client[0], name))
                 {
-                    return ind;
+                    if(i == 0) { return ind; }
+                    indexes.Add(ind);
                 }
                 ind++;
             }
-            return -1;
+            if (indexes.Count == 0)
+            {
+                return -1;
+            }
+            return indexes[i%indexes.Count];
+        }
+
+        public static int GetProcIndex(string name, int i)
+        {
+            int ind = 0;
+            List<int> indexes = new List<int>();
+            foreach (string[] procedure in procedures_db)
+            {
+                //Console.WriteLine(CompareStrings(client[0], name)+" " + client[0] + " " + name);
+                if (CompareStrings(procedure[0], name))
+                {
+                    if (i == 0) { return ind; }
+                    indexes.Add(ind);
+                }
+                ind++;
+            }
+            if (indexes.Count == 0)
+            {
+                return -1;
+            }
+            return indexes[i % indexes.Count];
         }
         public static int GetEntryIndex(string photopath)
         {
@@ -131,6 +169,7 @@ namespace ClientDatabaseCosmetology
             {
                 wrapped_string += line + "\n";
             }
+            if(wrapped_string == "") return "";
             if (wrapped_string[0] == '\n')
             {
                 wrapped_string = wrapped_string.Substring(1);
@@ -140,6 +179,40 @@ namespace ClientDatabaseCosmetology
         public static bool CompareStrings(string str1, string str2)
         {
             return str1.ToLower().Contains(str2.ToLower()) || str2.ToLower().Contains(str1.ToLower());
+        }
+        public static string CalculatePrice(string preps)
+        {
+            double price = 0;
+            string[] preparats = preps.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach(string preparat in preparats)
+            {
+                string[] prep_price = preparat.Split('-');
+                //Console.WriteLine("|"+prep_price[0]+"|");
+                int prep_ind = Int32.Parse(prep_price[0]);
+                int prep_mult = Int32.Parse(prep_price[1]);
+                //Console.WriteLine(preparats_db[0]);
+                string[] prep_arr = preparats_db[prep_ind];
+                double prep_price_i = Double.Parse(prep_arr[2]);
+                price += (prep_price_i * prep_mult);
+            }
+            return price+"";
+        } 
+        public static string PrepString(string preps)
+        {
+            string preparat_string = "";
+            string[] preparats = preps.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string preparat in preparats)
+            {
+                string[] prep_price = preparat.Split('-');
+                //Console.WriteLine("|" + prep_price[0] + "|");
+                int prep_ind = Int32.Parse(prep_price[0]);
+                string prep_mult = prep_price[1];
+                //Console.WriteLine(preparats_db[0]);
+                string[] prep_arr = preparats_db[prep_ind];
+                string prep_name = prep_arr[0];
+                preparat_string += (prep_name +" x" +prep_mult) + "\n";
+            }
+            return preparat_string;
         }
         public void RenderEntries()
         {
@@ -171,6 +244,7 @@ namespace ClientDatabaseCosmetology
                 Label val_5 = new Label();
                 Label id = new Label();
                 PictureBox pic1 = new PictureBox();
+                Button edit_btn = new Button();
 
                 id.Text = entry_db[i][5];
                 id.Visible = false;
@@ -178,25 +252,25 @@ namespace ClientDatabaseCosmetology
                 entry_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                 entry_panel.Location = new System.Drawing.Point(6, 19 + 49*act_j);
                 entry_panel.Name = "default_entry_panel_" + j;
-                entry_panel.Size = new System.Drawing.Size(601, 48);
+                entry_panel.Size = new System.Drawing.Size(660, 48);
                 entry_panel.TabIndex = 0;
 
                 val_1.AutoSize = true;
-                val_1.Location = new System.Drawing.Point(12, 12);
+                val_1.Location = new System.Drawing.Point(8, 12);
                 val_1.Name = "value_1_" + j;
                 val_1.Size = new System.Drawing.Size(35, 13);
                 val_1.TabIndex = 0;
                 val_1.Text = WordWrap(entry_db[i][0], 18);
 
                 val_2.AutoSize = true;
-                val_2.Location = new System.Drawing.Point(100, 10);
+                val_2.Location = new System.Drawing.Point(90, 10);
                 val_2.Name = "value_2_" + j;
                 val_2.Size = new System.Drawing.Size(35, 13);
                 val_2.TabIndex = 1;
                 val_2.Text = WordWrap(entry_db[i][1], 18);
 
                 val_3.AutoSize = true;
-                val_3.Location = new System.Drawing.Point(200, 18);
+                val_3.Location = new System.Drawing.Point(185, 18);
                 val_3.Name = "value_3_" + j;
                 val_3.Size = new System.Drawing.Size(35, 13);
                 val_3.TabIndex = 2;
@@ -204,20 +278,20 @@ namespace ClientDatabaseCosmetology
                 val_3.Text = entry_db[i][2];
 
                 val_4.AutoSize = true;
-                val_4.Location = new System.Drawing.Point(280, 18);
+                val_4.Location = new System.Drawing.Point(275, 8);
                 val_4.Name = "value_4_" + j;
                 val_4.Size = new System.Drawing.Size(35, 13);
                 val_4.TabIndex = 2;
                 val_4.TextAlign = ContentAlignment.MiddleCenter;
-                val_4.Text = entry_db[i][3];
+                val_4.Text = WordWrap(entry_db[i][3], 18);
 
                 val_5.AutoSize = true;
-                val_5.Location = new System.Drawing.Point(380, 18);
+                val_5.Location = new System.Drawing.Point(360, 18);
                 val_5.Name = "value_5_" + j;
                 val_5.Size = new System.Drawing.Size(35, 13);
                 val_5.TabIndex = 2;
                 val_5.TextAlign = ContentAlignment.MiddleCenter;
-                val_5.Text = entry_db[i][4];
+                val_5.Text = WordWrap(entry_db[i][4], 22);
 
 
                 pic1.Location = new System.Drawing.Point(500, 3);
@@ -229,6 +303,13 @@ namespace ClientDatabaseCosmetology
                 pic1.Click += new System.EventHandler(ViewEntryPics);
                 pic1.Image = Image.FromFile(images_path + entry_db[i][5]);
 
+                edit_btn.AutoSize = true;
+                edit_btn.Location = new System.Drawing.Point(560, 10);
+                edit_btn.Name = "edit_btn_" + j + ":" + i;
+                edit_btn.TabIndex = 1;
+                edit_btn.Text = "Edit";
+                edit_btn.Click += Edit_btn_Click;
+
                 entry_panel.Controls.Add(id);
                 entry_panel.Controls.Add(val_1);
                 entry_panel.Controls.Add(val_2);
@@ -236,12 +317,26 @@ namespace ClientDatabaseCosmetology
                 entry_panel.Controls.Add(val_4);
                 entry_panel.Controls.Add(val_5);
                 entry_panel.Controls.Add(pic1);
+                entry_panel.Controls.Add(edit_btn);
 
                 RenderGroupBox.Controls.Add(entry_panel);
                 act_j++;
             }
         }
-        static void WriteLocalDatabases()
+        public static void RenderAllForms()
+        {
+            this_.RenderEntries();
+            ProcedureView.RenderEntries();
+            PreparatView.RenderEntries();
+            ClientView.RenderEntries();
+            MainForm.WriteLocalDatabases();
+        }
+        private void Edit_btn_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        public static void WriteLocalDatabases()
         {
             ClearLocalDatabases();
             {
@@ -301,6 +396,44 @@ namespace ClientDatabaseCosmetology
                 }
                 writer.Close();
             }
+            {
+                FileStream fs = new FileStream(procedures_db_path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                StreamWriter writer = new StreamWriter(fs);
+                foreach (string[] proc in procedures_db)
+                {
+                    string line = "";
+                    for (int i = 0; i < proc.Length; i++)
+                    {
+                        line += proc[i];
+                        if (i == proc.Length - 1)
+                        {
+                            break;
+                        }
+                        line += "~";
+                    }
+                    writer.WriteLine(line);
+                }
+                writer.Close();
+            }
+            {
+                FileStream fs = new FileStream(preparats_db_path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                StreamWriter writer = new StreamWriter(fs);
+                foreach (string[] prep in preparats_db)
+                {
+                    string line = "";
+                    for (int i = 0; i < prep.Length; i++)
+                    {
+                        line += prep[i];
+                        if (i == prep.Length - 1)
+                        {
+                            break;
+                        }
+                        line += "~";
+                    }
+                    writer.WriteLine(line);
+                }
+                writer.Close();
+            }
         }
         static void ReadLocalDatabases()
         {
@@ -350,6 +483,36 @@ namespace ClientDatabaseCosmetology
                 }
                 reader.Close();
             }
+            {
+                FileStream fs = new FileStream(procedures_db_path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                StreamReader reader = new StreamReader(fs);
+                string line = "";
+                while (true)
+                {
+                    line = reader.ReadLine();
+                    if (line == "" || line == null)
+                    {
+                        break;
+                    }
+                    procedures_db.Add(line.Split('~'));
+                }
+                reader.Close();
+            }
+            {
+                FileStream fs = new FileStream(preparats_db_path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                StreamReader reader = new StreamReader(fs);
+                string line = "";
+                while (true)
+                {
+                    line = reader.ReadLine();
+                    if (line == "" || line == null)
+                    {
+                        break;
+                    }
+                    preparats_db.Add(line.Split('~'));
+                }
+                reader.Close();
+            }
         }
         static void ClearLocalDatabases()
         {
@@ -365,12 +528,21 @@ namespace ClientDatabaseCosmetology
                 FileStream fs = new FileStream(pictures_db_path, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite);
                 fs.Close();
             }
+            {
+                FileStream fs = new FileStream(procedures_db_path, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite);
+                fs.Close();
+            }
+            {
+                FileStream fs = new FileStream(preparats_db_path, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite);
+                fs.Close();
+            }
         }
         static void ClearRamDatabases()
         {
             entry_db.Clear();
             client_db.Clear();
             picture_db.Clear();
+            procedures_db.Clear();
         }
 
         private void down_btw_Click(object sender, EventArgs e)
@@ -467,6 +639,27 @@ namespace ClientDatabaseCosmetology
         {
             NewClientForm n = new NewClientForm(this);
             n.ShowDialog();
+        }
+
+        private void clients_view_btn_Click(object sender, EventArgs e)
+        {
+            ClientView ClientViewForm = new ClientView(this);
+            ClientViewForm.Show();
+            RenderEntries();
+        }
+
+        private void procedures_view_btn_Click(object sender, EventArgs e)
+        {
+            ProcedureView ProcedureViewForm = new ProcedureView(this);
+            ProcedureViewForm.Show();
+            RenderEntries();
+        }
+
+        private void prep_view_btn_Click(object sender, EventArgs e)
+        {
+            PreparatView PreparatsViewForm = new PreparatView(this);
+            PreparatsViewForm.Show();
+            RenderEntries();
         }
     }
 }

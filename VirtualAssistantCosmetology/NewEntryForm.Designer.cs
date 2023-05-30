@@ -1,4 +1,4 @@
-﻿namespace ClientDatabaseCosmetology
+﻿namespace VirtualAssistantCosmetology
 {
     partial class NewEntryForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewEntryForm));
             this.title_lbl = new System.Windows.Forms.Label();
             this.nm_lbl = new System.Windows.Forms.Label();
             this.name_txtbox = new System.Windows.Forms.TextBox();
@@ -44,6 +45,7 @@
             this.add_entry_btn = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.today_btn = new System.Windows.Forms.Button();
+            this.procedure_check_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // title_lbl
@@ -71,6 +73,7 @@
             this.name_txtbox.Name = "name_txtbox";
             this.name_txtbox.Size = new System.Drawing.Size(258, 20);
             this.name_txtbox.TabIndex = 11;
+            this.name_txtbox.TextChanged += new System.EventHandler(this.name_txtbox_TextChanged);
             // 
             // date_txt
             // 
@@ -95,6 +98,7 @@
             this.proc_txt.Name = "proc_txt";
             this.proc_txt.Size = new System.Drawing.Size(258, 20);
             this.proc_txt.TabIndex = 15;
+            this.proc_txt.TextChanged += new System.EventHandler(this.proc_txt_TextChanged);
             // 
             // proc_lbl
             // 
@@ -160,7 +164,7 @@
             // add_entry_btn
             // 
             this.add_entry_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.add_entry_btn.Location = new System.Drawing.Point(12, 201);
+            this.add_entry_btn.Location = new System.Drawing.Point(12, 194);
             this.add_entry_btn.Name = "add_entry_btn";
             this.add_entry_btn.Size = new System.Drawing.Size(410, 53);
             this.add_entry_btn.TabIndex = 22;
@@ -182,11 +186,22 @@
             this.today_btn.UseVisualStyleBackColor = true;
             this.today_btn.Click += new System.EventHandler(this.today_btn_Click);
             // 
+            // procedure_check_btn
+            // 
+            this.procedure_check_btn.Location = new System.Drawing.Point(370, 113);
+            this.procedure_check_btn.Name = "procedure_check_btn";
+            this.procedure_check_btn.Size = new System.Drawing.Size(52, 23);
+            this.procedure_check_btn.TabIndex = 24;
+            this.procedure_check_btn.Text = "Check";
+            this.procedure_check_btn.UseVisualStyleBackColor = true;
+            this.procedure_check_btn.Click += new System.EventHandler(this.procedure_check_btn_Click);
+            // 
             // NewEntryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 266);
+            this.ClientSize = new System.Drawing.Size(434, 254);
+            this.Controls.Add(this.procedure_check_btn);
             this.Controls.Add(this.today_btn);
             this.Controls.Add(this.add_entry_btn);
             this.Controls.Add(this.pic_brows_btn);
@@ -202,8 +217,9 @@
             this.Controls.Add(this.name_txtbox);
             this.Controls.Add(this.nm_lbl);
             this.Controls.Add(this.title_lbl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewEntryForm";
-            this.Text = "New_entry";
+            this.Text = "New Entry";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -227,5 +243,6 @@
         private System.Windows.Forms.Button add_entry_btn;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button today_btn;
+        private System.Windows.Forms.Button procedure_check_btn;
     }
 }

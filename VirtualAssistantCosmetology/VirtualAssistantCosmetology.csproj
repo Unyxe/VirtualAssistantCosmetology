@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{38FB9992-ED0A-4B63-A36E-F27A9C0A3527}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ClientDatabaseCosmetology</RootNamespace>
-    <AssemblyName>ClientDatabaseCosmetology</AssemblyName>
+    <RootNamespace>VirtualAssistantCosmetology</RootNamespace>
+    <AssemblyName>VirtualAssistantCosmetology</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,6 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientEditor.Designer.cs">
+      <DependentUpon>ClientEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientView.Designer.cs">
+      <DependentUpon>ClientView.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,14 +79,38 @@
     <Compile Include="NewEntryForm.Designer.cs">
       <DependentUpon>NewEntryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewPreparatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewPreparatForm.Designer.cs">
+      <DependentUpon>NewPreparatForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PictureView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PictureView.Designer.cs">
       <DependentUpon>PictureView.cs</DependentUpon>
     </Compile>
+    <Compile Include="PreparatView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreparatView.Designer.cs">
+      <DependentUpon>PreparatView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProcedureView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcedureView.Designer.cs">
+      <DependentUpon>ProcedureView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ClientEditor.resx">
+      <DependentUpon>ClientEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientView.resx">
+      <DependentUpon>ClientView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,8 +120,17 @@
     <EmbeddedResource Include="NewEntryForm.resx">
       <DependentUpon>NewEntryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewPreparatForm.resx">
+      <DependentUpon>NewPreparatForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PictureView.resx">
       <DependentUpon>PictureView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreparatView.resx">
+      <DependentUpon>PreparatView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProcedureView.resx">
+      <DependentUpon>ProcedureView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -92,6 +140,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -105,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

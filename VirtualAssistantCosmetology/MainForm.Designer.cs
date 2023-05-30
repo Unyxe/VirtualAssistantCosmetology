@@ -1,4 +1,4 @@
-﻿namespace ClientDatabaseCosmetology
+﻿namespace VirtualAssistantCosmetology
 {
     partial class MainForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.RenderGroupBox = new System.Windows.Forms.GroupBox();
             this.up_btn = new System.Windows.Forms.Button();
             this.down_btw = new System.Windows.Forms.Button();
@@ -44,6 +45,9 @@
             this.new_entry_image = new System.Windows.Forms.Button();
             this.title_lbl = new System.Windows.Forms.Label();
             this.new_client_btn = new System.Windows.Forms.Button();
+            this.clients_view_btn = new System.Windows.Forms.Button();
+            this.procedures_view_btn = new System.Windows.Forms.Button();
+            this.prep_view_btn = new System.Windows.Forms.Button();
             this.column_names_panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,13 +55,13 @@
             // 
             this.RenderGroupBox.Location = new System.Drawing.Point(12, 140);
             this.RenderGroupBox.Name = "RenderGroupBox";
-            this.RenderGroupBox.Size = new System.Drawing.Size(613, 577);
+            this.RenderGroupBox.Size = new System.Drawing.Size(673, 577);
             this.RenderGroupBox.TabIndex = 0;
             this.RenderGroupBox.TabStop = false;
             // 
             // up_btn
             // 
-            this.up_btn.Location = new System.Drawing.Point(439, 81);
+            this.up_btn.Location = new System.Drawing.Point(517, 81);
             this.up_btn.Name = "up_btn";
             this.up_btn.Size = new System.Drawing.Size(75, 23);
             this.up_btn.TabIndex = 1;
@@ -67,7 +71,7 @@
             // 
             // down_btw
             // 
-            this.down_btw.Location = new System.Drawing.Point(532, 81);
+            this.down_btw.Location = new System.Drawing.Point(610, 81);
             this.down_btw.Name = "down_btw";
             this.down_btw.Size = new System.Drawing.Size(75, 23);
             this.down_btw.TabIndex = 2;
@@ -85,7 +89,7 @@
             this.column_names_panel.Controls.Add(this.name_column_txt);
             this.column_names_panel.Location = new System.Drawing.Point(12, 116);
             this.column_names_panel.Name = "column_names_panel";
-            this.column_names_panel.Size = new System.Drawing.Size(613, 37);
+            this.column_names_panel.Size = new System.Drawing.Size(673, 37);
             this.column_names_panel.TabIndex = 3;
             // 
             // pic_column_txt
@@ -217,11 +221,44 @@
             this.new_client_btn.UseVisualStyleBackColor = true;
             this.new_client_btn.Click += new System.EventHandler(this.new_client_btn_Click);
             // 
+            // clients_view_btn
+            // 
+            this.clients_view_btn.Location = new System.Drawing.Point(228, 9);
+            this.clients_view_btn.Name = "clients_view_btn";
+            this.clients_view_btn.Size = new System.Drawing.Size(75, 23);
+            this.clients_view_btn.TabIndex = 10;
+            this.clients_view_btn.Text = "Clients";
+            this.clients_view_btn.UseVisualStyleBackColor = true;
+            this.clients_view_btn.Click += new System.EventHandler(this.clients_view_btn_Click);
+            // 
+            // procedures_view_btn
+            // 
+            this.procedures_view_btn.Location = new System.Drawing.Point(309, 9);
+            this.procedures_view_btn.Name = "procedures_view_btn";
+            this.procedures_view_btn.Size = new System.Drawing.Size(75, 23);
+            this.procedures_view_btn.TabIndex = 11;
+            this.procedures_view_btn.Text = "Procedures";
+            this.procedures_view_btn.UseVisualStyleBackColor = true;
+            this.procedures_view_btn.Click += new System.EventHandler(this.procedures_view_btn_Click);
+            // 
+            // prep_view_btn
+            // 
+            this.prep_view_btn.Location = new System.Drawing.Point(390, 9);
+            this.prep_view_btn.Name = "prep_view_btn";
+            this.prep_view_btn.Size = new System.Drawing.Size(75, 23);
+            this.prep_view_btn.TabIndex = 12;
+            this.prep_view_btn.Text = "Preparats";
+            this.prep_view_btn.UseVisualStyleBackColor = true;
+            this.prep_view_btn.Click += new System.EventHandler(this.prep_view_btn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 729);
+            this.ClientSize = new System.Drawing.Size(697, 729);
+            this.Controls.Add(this.prep_view_btn);
+            this.Controls.Add(this.procedures_view_btn);
+            this.Controls.Add(this.clients_view_btn);
             this.Controls.Add(this.new_client_btn);
             this.Controls.Add(this.title_lbl);
             this.Controls.Add(this.new_entry_image);
@@ -233,6 +270,7 @@
             this.Controls.Add(this.up_btn);
             this.Controls.Add(this.RenderGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Virtual Assistant";
@@ -261,6 +299,9 @@
         private System.Windows.Forms.Button new_entry_image;
         private System.Windows.Forms.Label title_lbl;
         private System.Windows.Forms.Button new_client_btn;
+        private System.Windows.Forms.Button clients_view_btn;
+        private System.Windows.Forms.Button procedures_view_btn;
+        private System.Windows.Forms.Button prep_view_btn;
     }
 }
 

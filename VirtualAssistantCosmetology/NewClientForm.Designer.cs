@@ -1,4 +1,4 @@
-﻿namespace ClientDatabaseCosmetology
+﻿namespace VirtualAssistantCosmetology
 {
     partial class NewClientForm
     {
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewClientForm));
             this.add_client_btn = new System.Windows.Forms.Button();
             this.desc_txt = new System.Windows.Forms.TextBox();
             this.desc_lbl = new System.Windows.Forms.Label();
@@ -103,8 +104,9 @@
             this.Controls.Add(this.name_txtbox);
             this.Controls.Add(this.nm_lbl);
             this.Controls.Add(this.title_lbl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewClientForm";
-            this.Text = "NewClientForm";
+            this.Text = "New Client";
             this.ResumeLayout(false);
             this.PerformLayout();
 

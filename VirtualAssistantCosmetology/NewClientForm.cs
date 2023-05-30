@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClientDatabaseCosmetology
+namespace VirtualAssistantCosmetology
 {
     public partial class NewClientForm : Form
     {
